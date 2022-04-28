@@ -21,40 +21,73 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binder=ActivityMainBinding.inflate(getLayoutInflater());
+        binder = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binder.getRoot());
-        checkPermissions(MainActivity.this,PERMS);
+        checkPermissions(MainActivity.this, PERMS);
 
 
         //exit FAB
         binder.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              moveTaskToBack(true);
-              android.os.Process.killProcess(android.os.Process.myPid());
-              System.exit(1);
+                moveTaskToBack(true);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
             }
         });
 
 
     }
 
-    private void checkPermissions(Context context, String[] perms) {
-        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
-            for ( final String s : perms)
-                if (context.checkSelfPermission(s) != PackageManager.PERMISSION_GRANTED)
-                    ((AppCompatActivity) context).requestPermissions(perms, 1111);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length == PERMS.length) {
+            if (allPermsGranted(MainActivity.this, PERMS)) {//Tricky click the login when all perms are granted
+                // ta permissions exoun parthei
+
+
+            }else{
+                // o xrhsths aperipse ta permissions
+                moveTaskToBack(true);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
+            }
+
         }
     }
 
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
+        private void checkPermissions (Context context, String[]perms){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                for (final String s : perms)
+                    if (context.checkSelfPermission(s) != PackageManager.PERMISSION_GRANTED)
+                        ((AppCompatActivity) context).requestPermissions(perms, 1111);
+            }
+        }
 
-    }
 
+        public static boolean allPermsGranted (Context context, String[]perms){
+            int curPermsAllowed = 0;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                for (final String s : perms)
+                    if (context.checkSelfPermission(s) == PackageManager.PERMISSION_GRANTED)
+                        curPermsAllowed++;
+                return curPermsAllowed == perms.length;
+            }
+            //sumvatothta pros ta pisw
+            return true;
+
+        }
+
+
+        @Override
+        public void onLocationChanged (@NonNull Location location){
+
+        }
 
 
 }
