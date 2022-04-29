@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private ActivityMainBinding binder;
     double lat;
     double lon;
+    int i=0;
     protected static final String[] PERMS = {
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -69,13 +70,21 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         binder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String ll=String.valueOf(lat);
-                String ln=String.valueOf(lon);
-                binder.latitude.setText(ll);
-                binder.longitude.setText(ln);
 
+                if (i%2==0) {
+                    String ll = String.valueOf(lat);
+                    String ln = String.valueOf(lon);
+                    binder.latitude.setText(ll);
+                    binder.longitude.setText(ln);
+                }else{
+                    binder.longitude.setText("");
+                    binder.latitude.setText("");
+
+                }
+                i=i+1;
 
             }
+
         });
 
 
