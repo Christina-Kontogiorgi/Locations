@@ -14,6 +14,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.findyourlocation.databinding.ActivityMainBinding;
@@ -47,31 +48,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
-        binder.startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Geocoder geocoder= new Geocoder(this);
-                List<Address> addressList;
 
-                try {
-                    addressList= geocoder.getFromLocation();
-                    if ( addressList != null){
-                        double doubleLat=addressList.get(0).getLatitude();
-                        double doubleLong=addressList.get(0).getLongitude();
-                        binder.latitude(String.valueOf(doubleLat));
-                        binder.longitude(String.valueOf(doubleLong));
-
-                    }
-
-
-                }catch ( IOException e){
-                    e.printStackTrace();
-                }
-
-
-
-            }
-        });
 
     }
 
@@ -118,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         @Override
         public void onLocationChanged (@NonNull Location location){
+            Log.e("test",location.toString());
 
         }
 
