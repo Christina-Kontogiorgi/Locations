@@ -25,6 +25,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
     private ActivityMainBinding binder;
+    double lat;
+    double lon;
     protected static final String[] PERMS = {
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -63,6 +65,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,3000, 1, locListener);
 
         }
+
+        binder.startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String ll=String.valueOf(lat);
+                String ln=String.valueOf(lon);
+                binder.latitude.setText(ll);
+                binder.longitude.setText(ln);
+
+
+            }
+        });
 
 
 
@@ -112,6 +126,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         @Override
         public void onLocationChanged (@NonNull Location location){
             Log.e("test",location.toString());
+            lat=location.getLatitude();
+            lon=location.getLongitude();
+
 
         }
 
