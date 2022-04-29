@@ -12,6 +12,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,6 +48,21 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 System.exit(1);
             }
         });
+
+        LocationListener locListener=this;
+        LocationManager mLocManager=(LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //even though we dont need that check (user already forced to allow location perm),it it needed for location manager below
+        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M){
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED
+            && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+                return;
+            }
+        }
+        if (mLocManager!=null){
+            mLocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,3000, 1, locListener);
+            mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,3000, 1, locListener);
+
+        }
 
 
 
