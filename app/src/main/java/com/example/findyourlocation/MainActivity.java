@@ -2,14 +2,9 @@ package com.example.findyourlocation;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Context;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,14 +15,11 @@ import android.view.View;
 
 import com.example.findyourlocation.databinding.ActivityMainBinding;
 
-import java.io.IOException;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity implements LocationListener {
     private ActivityMainBinding binder;
-    double lat;
-    double lon;
-    boolean turnedOn = false;
+    private double lat;
+    private double lon;
+    public boolean turnedOn = false;
 
     protected static final String[] PERMS = {
             Manifest.permission.INTERNET,
