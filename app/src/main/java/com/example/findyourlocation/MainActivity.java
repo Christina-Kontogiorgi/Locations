@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private ActivityMainBinding binder;
     double lat;
     double lon;
-    boolean turnedOn=true;
+    boolean turnedOn = true;
 
     protected static final String[] PERMS = {
             Manifest.permission.INTERNET,
@@ -53,25 +53,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
-        LocationListener locListener=this;
-        LocationManager mLocManager=(LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locListener = this;
+        LocationManager mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         //even though we dont need that check (user already forced to allow location perm),it it needed for location manager below
-        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M){
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED
-            && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
         }
-        if (mLocManager!=null){
-            mLocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,3000, 1, locListener);
-            mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,3000, 1, locListener);
+        if (mLocManager != null) {
+            mLocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 1, locListener);
+            mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 1, locListener);
 
         }
-
-
-
-
-
 
 
     }
@@ -84,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 // ta permissions exoun parthei
 
 
-            }else{
+            } else {
                 // o xrhsths aperipse ta permissions
                 moveTaskToBack(true);
                 android.os.Process.killProcess(android.os.Process.myPid());
@@ -94,56 +89,53 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
     }
 
-        private void checkPermissions (Context context, String[]perms){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                for (final String s : perms)
-                    if (context.checkSelfPermission(s) != PackageManager.PERMISSION_GRANTED)
-                        ((AppCompatActivity) context).requestPermissions(perms, 1111);
-            }
+    private void checkPermissions(Context context, String[] perms) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            for (final String s : perms)
+                if (context.checkSelfPermission(s) != PackageManager.PERMISSION_GRANTED)
+                    ((AppCompatActivity) context).requestPermissions(perms, 1111);
         }
+    }
 
 
-        public static boolean allPermsGranted (Context context, String[]perms){
-            int curPermsAllowed = 0;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                for (final String s : perms)
-                    if (context.checkSelfPermission(s) == PackageManager.PERMISSION_GRANTED)
-                        curPermsAllowed++;
-                return curPermsAllowed == perms.length;
-            }
-            //sumvatothta pros ta pisw
-            return true;
-
+    public static boolean allPermsGranted(Context context, String[] perms) {
+        int curPermsAllowed = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            for (final String s : perms)
+                if (context.checkSelfPermission(s) == PackageManager.PERMISSION_GRANTED)
+                    curPermsAllowed++;
+            return curPermsAllowed == perms.length;
         }
+        //sumvatothta pros ta pisw
+        return true;
+
+    }
 
 
-        @Override
-        public void onLocationChanged (@NonNull Location location){
-            Log.e("test",location.toString());
-            lat=location.getLatitude();
-            lon=location.getLongitude();
-            binder.startButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    turnedOn=!turnedOn;
-                    if (turnedOn){
-                        String ll=String.valueOf(lat);
-                        String ln=String.valueOf(lon);
-                        binder.latitude.setText(ll);
-                        binder.longitude.setText(ln);
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        Log.e("test", location.toString());
+        lat = location.getLatitude();
+        lon = location.getLongitude();
+        binder.startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                turnedOn = !turnedOn;
+                if (turnedOn) {
+                    String ll = String.valueOf(lat);
+                    String ln = String.valueOf(lon);
+                    binder.latitude.setText(ll);
+                    binder.longitude.setText(ln);
 
-                    }else {
-                        binder.longitude.setText("");
-                        binder.latitude.setText("");
-                    }
+                } else {
+                    binder.longitude.setText("");
+                    binder.latitude.setText("");
                 }
-            });
+            }
+        });
 
 
-
-        }
-
-
+    }
 
 
 }
