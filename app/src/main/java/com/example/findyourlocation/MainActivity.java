@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private ActivityMainBinding binder;
     double lat;
     double lon;
-    boolean turnedOn = true;
+    boolean turnedOn = false;
 
     protected static final String[] PERMS = {
             Manifest.permission.INTERNET,
@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
 
 
-
         });
 
         LocationListener locListener = this;
@@ -80,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
 
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -127,22 +127,23 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Log.e("test", location.toString());
         lat = location.getLatitude();
         lon = location.getLongitude();
-        if (turnedOn){
-            String ll =String.valueOf(lat);
-            String ln= String.valueOf(lon);
+
+        if (turnedOn) {
+            String ll = String.valueOf(lat);
+            String ln = String.valueOf(lon);
             binder.latitude.setText(ll);
             binder.longitude.setText(ln);
             binder.startButton.setText("stop");
-        }else{
+        } else {
+
+
             binder.longitude.setText("");
             binder.latitude.setText("");
             binder.startButton.setText("start");
         }
 
 
-
-
     }
-    
+
 
 }
