@@ -53,6 +53,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
+        binder.startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                turnedOn = !turnedOn;
+            }
+
+
+
+        });
+
         LocationListener locListener = this;
         LocationManager mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         //even though we dont need that check (user already forced to allow location perm),it it needed for location manager below
@@ -117,27 +127,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Log.e("test", location.toString());
         lat = location.getLatitude();
         lon = location.getLongitude();
-        binder.startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                turnedOn = !turnedOn;
-                if (turnedOn) {
-                    String ll = String.valueOf(lat);
-                    String ln = String.valueOf(lon);
-                    binder.latitude.setText(ll);
-                    binder.longitude.setText(ln);
-                    binder.startButton.setText("Stop");
+        if (turnedOn){
+            String ll =String.valueOf(lat);
+            String ln= String.valueOf(lon);
+            binder.latitude.setText(ll);
+            binder.longitude.setText(ln);
+            binder.startButton.setText("stop");
+        }else{
+            binder.longitude.setText("");
+            binder.latitude.setText("");
+            binder.startButton.setText("start");
+        }
 
-                } else {
-                    binder.longitude.setText("");
-                    binder.latitude.setText("");
-                    binder.startButton.setText("Start");
-                }
-            }
-        });
+
 
 
     }
-
+    
 
 }
