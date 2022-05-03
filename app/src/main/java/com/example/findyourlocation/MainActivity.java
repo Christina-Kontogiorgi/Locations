@@ -126,10 +126,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     String ln = String.valueOf(lon);
                     binder.latitude.setText(ll);
                     binder.longitude.setText(ln);
+                    binder.startButton.setText("Stop");
 
                 } else {
                     binder.longitude.setText("");
                     binder.latitude.setText("");
+                    binder.startButton.setText("Start");
                 }
             }
         });
