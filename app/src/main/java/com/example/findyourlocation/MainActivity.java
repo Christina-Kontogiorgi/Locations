@@ -68,27 +68,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         }
 
-        binder.startButton.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View view) {
-               turnedOn=!turnedOn;
-                if (turnedOn) {
-                    String ll = String.valueOf(lat);
-                    String ln = String.valueOf(lon);
-                    binder.latitude.setText(ll);
-                    binder.longitude.setText(ln);
-
-                }else{
-                    binder.longitude.setText("");
-                    binder.latitude.setText("");
-
-                }
-                
-
-            }
-
-        });
 
 
 
@@ -142,6 +122,23 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             Log.e("test",location.toString());
             lat=location.getLatitude();
             lon=location.getLongitude();
+            binder.startButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    turnedOn=!turnedOn;
+                    if (turnedOn){
+                        String ll=String.valueOf(lat);
+                        String ln=String.valueOf(lon);
+                        binder.latitude.setText(ll);
+                        binder.longitude.setText(ln);
+
+                    }else {
+                        binder.longitude.setText("");
+                        binder.latitude.setText("");
+                    }
+                }
+            });
+
 
 
         }
